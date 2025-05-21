@@ -1,5 +1,0 @@
-streamlit
-aiohttp
-pandas
-matplotlib
-numpy
