@@ -1,4 +1,5 @@
 streamlit
 aiohttp
 pandas
-python-binance
+matplotlib
+numpy
