@@ -84,10 +84,15 @@ async def get_usdt_pairs(session, is_futures=False):
     url = f"{FUTURES_URL}/fapi/v1/exchangeInfo" if is_futures else f"{SPOT_URL}/api/v3/exchangeInfo"
     async with session.get(url) as resp:
         data = await resp.json()
-        return [
-            s['symbol'] for s in data['symbols']
-            if s['quoteAsset'] == 'USDT' and s['status'] == 'TRADING'
-        ]
+        if 'symbols' not in data:
+    st.error("Binance API error — 'symbols' not found. Response:\n" + str(data))
+    return []
+
+return [
+    s['symbol'] for s in data['symbols']
+    if s['quoteAsset'] == 'USDT' and s['status'] == 'TRADING'
+]
+
 
 async def fetch_klines(session, symbol, interval, is_futures=False, limit=3):
     base_url = FUTURES_URL if is_futures else SPOT_URL
